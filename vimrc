@@ -8,7 +8,6 @@ set nocompatible
 " Fix backspace indentation
 set backspace=indent,eol,start
 
-
 " Convince Vim it can use 256 colors inside Gnome Terminal.
 " Needs CSApprox plugin
 set t_Co=256
@@ -34,36 +33,16 @@ set foldenable
 " Make mouse middle click paste without formatting it.
 map <MouseMiddle> <Esc>"*p
 
-" Better modes.  Remeber where we are, support yankring
-" set viminfo=!,'100,\"100,:20,<50,s10,h,n~/.viminfo
-
-" Move Backup Files to ~/.vim/sessions
-"set backupdir=~/.vim/sessions
-"set dir=~/.vim/sessions
-
 " Turn off annoying swapfiles
 " set noswapfile
 
-"" Enable Syntax Colors
-"syntax on
-"if has("gui_running")
-"  set guifont=Mensch\ 10
-"else
-"  colorscheme mustang
-"endif
-
 syntax enable
-set background=light
-colorscheme solarized
-"let g:solarized_termtrans=1
-"let g:solarized_termcolors=256
-"let g:solarized_contrast="high"
-"let g:solarized_visibility="high"
-"call togglebg#map("<F5>")
+"set background=light
+"colorscheme solarized
 
 " Set fixed height widht of gvim windowset background=dark
 " The PC is fast enough, do syntax highlight syncing from start
-autocmd BufEnter * :syntax sync fromstart
+" autocmd BufEnter * :syntax sync fromstart
 
 " Set <leader> to ',' and <localleader> to "\"
 let mapleader=","
@@ -156,40 +135,6 @@ endfunction
 set smarttab
 set tabstop=8
 
-" Taglist
-"let Tlist_Compact_Format = 1
-"let Tlist_Ctags_Cmd = 'ctags'
-"let Tlist_Enable_Fold_Column = 0
-"let Tlist_Exist_OnlyWindow = 1
-"let Tlist_File_Fold_Auto_Close = 0
-"let Tlist_sort_type = "name"
-"let Tlist_Use_Right_Window = 1
-"let TlistHighlightTag = 1
-"let Tlist_Width = 40
-"let Tlist_GainFocus_On_ToggleOpen = 1
-"nnoremap <leader>l :Tlist<CR>
-
-" Tagbar
-let g:tagbar_usearrows = 1
-nnoremap <leader>l :TagbarToggle<CR>
-
-" GUI Tab settings
-function! GuiTabLabel()
-  let label = ''
-  let buflist = tabpagebuflist(v:lnum)
-  if exists('t:title')
-    let label .= t:title . ' '
-  endif
-  let label .= '[' . bufname(buflist[tabpagewinnr(v:lnum) - 1]) . ']'
-  for bufnr in buflist
-    if getbufvar(bufnr, '&modified')
-      let label .= '+'
-      break
-    endif
-  endfor
-  return label
-endfunction
-set guitablabel=%{GuiTabLabel()}
 
 " Gvim Settings
 
@@ -218,3 +163,22 @@ let g:netrw_list_hide='^\.,.\(pyc\|pyo\|o\)$'
 " ---
 autocmd FileType vim setlocal expandtab shiftwidth=2 tabstop=8 softtabstop=2
 
+" REQUIRED. This makes vim invoke Latex-Suite when you open a tex file.
+" filetype plugin on
+"
+" IMPORTANT: win32 users will need to have 'shellslash' set so that latex
+" can be called correctly.
+" set shellslash
+"
+" IMPORTANT: grep will sometimes skip displaying the file name if you
+" search in a singe file. This will confuse Latex-Suite. Set your grep
+" program to always generate a file-name.
+ set grepprg=grep\ -nH\ $*
+
+" OPTIONAL: This enables automatic indentation as you type.
+filetype indent on
+
+" OPTIONAL: Starting with Vim 7, the filetype of empty .tex files defaults to
+" 'plaintex' instead of 'tex', which results in vim-latex not being loaded.
+" The following changes the default filetype back to 'tex':
+" let g:tex_flavor='latex''
